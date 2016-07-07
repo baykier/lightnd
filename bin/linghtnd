@@ -1,0 +1,17 @@
+#! /usr/bin/env php
+<?php
+/**
+ * Created by PhpStorm.
+ * Author: Baykier<1035666345@qq.com> 
+ * Date: 16-7-8
+ * Time: 上午11:31
+ */
+
+ require __DIR__ . '/../vendor/autoload.php';
+
+ use Baykier\Linghtnd\Test;
+ use Symfony\Component\Console\Application;
+
+ $app = new Application('linghtnd','1.0');
+ $app->add(new Test());
+ $app->run();
