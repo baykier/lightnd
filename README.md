@@ -1,13 +1,15 @@
-Linghtnd
-========
+**Linghtnd**英文单词助手
+===================
 
-## linghtnd is english and typing software for people and powered by php.
+linghtnd 是一个用php写的CLI小程序，用来帮助你学习英语，同时练习打字速度
 
-## install
+## install安装
 
 * git clone https://github.com/baykier/lingtnd.git
 
 * composer install
 
-### usage
+### usage基本用法(正在做.....)
+
+..
 
