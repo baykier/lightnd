@@ -5,7 +5,7 @@
  * Date: 16-7-8
  * Time: 上午11:12
  */
-namespace Baykier\Linghtnd;
+namespace Baykier\Lightnd;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -13,13 +13,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class Test extends Command
+class QueryCommand extends Command
 {
     protected function configure()
     {
         $this
-            ->setName('test')
-            ->setDescription('test your english words and keyboard')
+            ->setName('query')
+            ->setDescription('query your english words from the store')
             ->addArgument(
                 'word',
                 InputArgument::OPTIONAL,

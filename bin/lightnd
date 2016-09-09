@@ -9,9 +9,11 @@
 
  require __DIR__ . '/../vendor/autoload.php';
 
- use Baykier\Linghtnd\Test;
+ use Baykier\Lightnd\AddCommand;
+ use \Baykier\Lightnd\QueryCommand;
  use Symfony\Component\Console\Application;
 
- $app = new Application('linghtnd','1.0');
- $app->add(new Test());
+ $app = new Application('lightnd','1.0');
+ $app->add(new AddCommand());
+ $app->add(new QueryCommand());
  $app->run();

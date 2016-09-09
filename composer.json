@@ -10,13 +10,20 @@
 
     "require":{
         "php": ">=5.5.9",
-        "symfony/console": "3.*"
+        "symfony/console": "3.*",
+        "monolog/monolog": "^1.21",
+        "vlucas/spot2": "^2.2"
     },
 
     "autoload":{
         "psr-4": {
-            "Baykier\\Linghtnd\\": "src/"
+            "Baykier\\Lightnd\\": "src/"
+        }
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
         }
     }
-
 }
