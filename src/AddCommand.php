@@ -19,6 +19,14 @@ use Baykier\Lightnd\Db;
 
 class AddCommand extends BaseCommand
 {
+    /**
+     * @是否是新单词
+     * @var bool
+     */
+    protected $isNew = true;
+
+    protected $isRewrite = false;
+
     protected function configure()
     {
         $this->setName('add')
@@ -39,7 +47,7 @@ class AddCommand extends BaseCommand
             $wordAnswer = '';
             while (!$wordAnswer)
             {
-                $wordAnswer = $helper->ask($input,$output,new Question('请输入要新增的单词? ',''));
+                $wordAnswer = $helper->ask($input,$output,new Question("请输入要新增的单词:\n ",''));
             }
             $input->setArgument('word',$wordAnswer);
         }
@@ -64,23 +72,35 @@ class AddCommand extends BaseCommand
             while (!$descAnswer)
             {
                 $descAnswer = $helper->ask($input,$output,
-                    new Question(sprintf("请输入单词:%s的释义或说明!",$word),''));
+                    new Question(sprintf("请输入单词:%s的释义或说明:\n",$word),''));
                 $input->setArgument('desc',$descAnswer);
             }
         }
+        if ($find)
+        {
+            $this->isNew = false;
+        }
+        if ($overWrite)
+        {
+            $this->isRewrite = true;
+        }
+
     }
 
     protected function execute(InputInterface $input,OutputInterface $output)
     {
         $word = $input->getArgument('word');
         $desc = $input->getArgument('desc');
-        $output->writeln(sprintf("你输入的单词:%s,\n 描述为:%s",$word,$desc));
+        $output->writeln(sprintf("你输入的单词:%s,\n 描述为:%s\n",$word,$desc));
         try
         {
-            $result = $this->addWord($word,$desc);
-            if (!$result)
+            if ($this->isNew)
             {
-                $output->writeln("保存数据失败");
+                $result = $this->addWord($word,$desc);
+            }
+            elseif (!$this->isNew && $this->isRewrite)
+            {
+                $result = $this->resetWord($word,$desc);
             }
         }catch (\Exception $e)
         {

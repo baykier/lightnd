@@ -7,39 +7,57 @@
  */
 namespace Baykier\Lightnd;
 
-use Symfony\Component\Console\Command\Command;
+
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Question\Question;
+use Baykier\Lightnd\BaseCommand;
 
-class QueryCommand extends Command
+class QueryCommand extends BaseCommand
 {
     protected function configure()
     {
         $this
             ->setName('query')
-            ->setDescription('query your english words from the store')
+            ->setDescription('查询单词的含义及说明')
             ->addArgument(
                 'word',
                 InputArgument::OPTIONAL,
-                'the words you should input'
+                '要查询的单词'
             );
+    }
+
+    protected function interact(InputInterface $input,OutputInterface $output)
+    {
+        $word = $input->getArgument('word');
+        $helper = new QuestionHelper();
+        //获取单词
+        if (empty($word))
+        {
+            $wordAnswer = '';
+            while (!$wordAnswer)
+            {
+                $wordAnswer = $helper->ask($input,$output,new Question("请输入要查询的单词:\n ",''));
+            }
+            $input->setArgument('word',$wordAnswer);
+        }
     }
 
     protected function execute(InputInterface $input,OutputInterface $output)
     {
         $word = $input->getArgument('word');
-
-        if($word)
+        $result = $this->findWord($word);
+        if (!$result)
         {
-            $text = ' Your input words is :<info>' . $word . '!</info>';
-        }
-        else
+            $output->writeln(sprintf("单词：%s没有查到，请先添加 [lightnd add bye]",$word));
+        }else
         {
-            $text = ' <error>You input nothing!</error>';
+            $output->writeln(sprintf("单词：%s含义如下:\n",$word));
+            $output->writeln($result['desc']);
+            $this->addWordQueryCount($result['word'],$result['query_count']);
         }
-
-        $output->writeln($text);
     }
 }

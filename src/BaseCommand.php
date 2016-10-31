@@ -30,9 +30,9 @@ class BaseCommand extends Command
             $this->db = new Db(sprintf("%s:host=%s;dbname=%s",$db['driver'],$db['host'],$db['dbname']),$db['user'],$db['password'],
                 array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''));
         }
-        catch (\Exception $e)
+        catch (\PDOException $e)
         {
-            throw new \Exception($this->db->errorInfo(),$this->db->errorCode());
+            throw new \Exception($e->getMessage(),$e->getCode());
         }
 
     }
@@ -48,7 +48,7 @@ class BaseCommand extends Command
         {
             throw new \Exception(sprintf("word:%s 或者desc:%s 不能为空",$word,$desc));
         }
-        $insert = $this->db->insert(array('word','desc','created'))
+        $insert = $this->db->insert(array('`word`','`desc`','`created`'))
                             ->into('ln_words')
                             ->values(array($word,$desc,time()));
         return $insert->execute() !== false;
@@ -71,5 +71,39 @@ class BaseCommand extends Command
                             ->where('word','=',$word);
         $stmp = $select->execute();
         return $stmp->fetch();
+    }
+
+    /**
+     * @更新单词含义
+     * @param $word
+     * @param $desc
+     * @return mixed
+     * @throws \Exception
+     */
+    public function resetWord($word,$desc)
+    {
+        if (empty($word) || empty($desc))
+        {
+            throw new \Exception(sprintf("word:%s 或者desc:%s 不能为空",$word,$desc));
+        }
+        return $this->db->update(array('desc' => $desc))
+                        ->table('ln_words')
+                        ->where('word','=',$word);
+    }
+
+    /**
+     * @添加查词计数
+     * @param $word
+     * @param int $count
+     * @return bool
+     * @throws \Exception
+     */
+    protected function addWordQueryCount($word,$count = 0)
+    {
+        $count = $count >= 0 ? (int) $count + 1 : 1;
+        $update = $this->db->update(array('query_count' => $count))
+                            ->table('ln_words')
+                            ->where('word','=',$word);
+        return $update->execute() !== false;
     }
 }
