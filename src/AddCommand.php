@@ -39,7 +39,6 @@ class AddCommand extends BaseCommand
     {
         $input->setInteractive(true);
         $word = $input->getArgument('word');
-        $desc = $input->getArgument('desc');
         $helper = new QuestionHelper();
         //获取单词
         if (empty($word))
@@ -66,6 +65,7 @@ class AddCommand extends BaseCommand
             $this->interact($input,$output);
         }
         //获取说明
+        $desc = $input->getArgument('desc');
         if (empty($desc))
         {
             $descAnswer = '';
