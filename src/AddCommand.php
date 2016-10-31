@@ -53,12 +53,9 @@ class AddCommand extends BaseCommand
         //如果不需要重新修改 提示输入新单词
         if($find && !$overWrite)
         {
-            $wordAnswer = '';
-            while (!$wordAnswer)
-            {
-                $wordAnswer = $helper->ask($input,$output,new Question('请输入要新增的单词? ',''));
-            }
-            $input->setArgument('word',$wordAnswer);
+            //清空单词
+            $input->setArgument('word','');
+            $this->interact($input,$output);
         }
         //获取说明
         if (empty($desc))
@@ -89,11 +86,5 @@ class AddCommand extends BaseCommand
         {
             $output->writeln($e->getMessage());
         }
-    }
-
-
-    protected function getInputWord(InputInterface $input,OutputInterface $output)
-    {
-        
     }
 }
