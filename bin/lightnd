@@ -7,11 +7,15 @@
  * Time: 上午11:31
  */
 
+define('ROOT_PATH',dirname(__DIR__));
+
  require __DIR__ . '/../vendor/autoload.php';
 
  use Baykier\Lightnd\AddCommand;
  use \Baykier\Lightnd\QueryCommand;
  use Symfony\Component\Console\Application;
+
+
 
  $app = new Application('lightnd','1.0');
  $app->add(new AddCommand());

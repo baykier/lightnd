@@ -12,7 +12,7 @@
         "php": ">=5.5.9",
         "symfony/console": "3.*",
         "monolog/monolog": "^1.21",
-        "vlucas/spot2": "^2.2"
+        "slim/pdo":"~1.9"
     },
 
     "autoload":{

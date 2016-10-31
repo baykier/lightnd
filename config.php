@@ -5,18 +5,14 @@
  * Date: 2016/9/9
  * Time: 15:15
  */
-$config = array();
 
 $config['db'] = array(
-    'driver' => 'mysql',
     'default' => array(
+        'driver' => 'mysql',
+        'host' => '127.0.0.1',
         'dbname' => 'lightnd',
-        'user' => 'root',
-        'password' => '',
-        'host' => 'localhost',
-        'driver' => 'pdo_mysql',
-        'query' => 'SET NAMES utf8 ',
+        'user' => 'vagrant',
+        'password' => 'vagrant',
+        'charset' => 'UTF-8',
     ),
 );
-
-return $config;
