@@ -31,7 +31,7 @@ class AddCommand extends BaseCommand
             ->setDescription('添加新的英文单词到词库 !')
             ->addArgument('word',InputArgument::OPTIONAL,'你想要存储的单词!')
             ->addArgument('desc',InputArgument::OPTIONAL,'单词释义，描述')
-            ->addOption('reset','-r',InputOption::VALUE_OPTIONAL,'是否强制新增（若存在则强制更新）');
+            ->addOption('reset','-r',InputOption::VALUE_NONE,'是否强制新增（若存在则强制更新）');
     }
 
     protected function interact(InputInterface $input,OutputInterface $output)
@@ -39,6 +39,7 @@ class AddCommand extends BaseCommand
         $input->setInteractive(true);
         $word = $input->getArgument('word');
         $reset = $input->getOption('reset');
+        $output->writeln($reset);
         $helper = new QuestionHelper();
         //获取单词
         if (empty($word))
@@ -51,7 +52,9 @@ class AddCommand extends BaseCommand
             $input->setArgument('word',$wordAnswer);
         }
         $find = $this->findWord($input->getArgument('word'));
-        $overWrite = !$reset ? true : false;//是否 存在--reset -r 强制新增
+        $overWrite = !$reset ? false : true;
+        //是否 存在--reset -r 强制新增
+
         if ($find && !$overWrite)
         {
             $overWrite = $helper->ask($input,$output,new ConfirmationQuestion(
