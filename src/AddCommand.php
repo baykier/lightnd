@@ -14,8 +14,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
-use Baykier\Lightnd\BaseCommand;
-use Baykier\Lightnd\Db;
 
 class AddCommand extends BaseCommand
 {
@@ -31,14 +29,16 @@ class AddCommand extends BaseCommand
     {
         $this->setName('add')
             ->setDescription('添加新的英文单词到词库 !')
-            ->addArgument('word',InputArgument::REQUIRED,'你想要存储的单词!')
-            ->addArgument('desc',InputArgument::REQUIRED,'单词释义，描述');
+            ->addArgument('word',InputArgument::OPTIONAL,'你想要存储的单词!')
+            ->addArgument('desc',InputArgument::OPTIONAL,'单词释义，描述')
+            ->addOption('reset','-r',InputOption::VALUE_OPTIONAL,'是否强制新增（若存在则强制更新）');
     }
 
     protected function interact(InputInterface $input,OutputInterface $output)
     {
         $input->setInteractive(true);
         $word = $input->getArgument('word');
+        $reset = $input->getOption('reset');
         $helper = new QuestionHelper();
         //获取单词
         if (empty($word))
@@ -51,8 +51,8 @@ class AddCommand extends BaseCommand
             $input->setArgument('word',$wordAnswer);
         }
         $find = $this->findWord($input->getArgument('word'));
-        $overWrite = false;//是否
-        if ($find)
+        $overWrite = !$reset ? true : false;//是否 存在--reset -r 强制新增
+        if ($find && !$overWrite)
         {
             $overWrite = $helper->ask($input,$output,new ConfirmationQuestion(
                 sprintf("单词:%s 已经存在，是否重新修改释义?[y/n]",$word),$overWrite));
