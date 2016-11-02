@@ -52,7 +52,7 @@ class QueryCommand extends BaseCommand
         $result = $this->findWord($word);
         if (!$result)
         {
-            $output->writeln(sprintf("单词：%s没有查到，请先添加 [lightnd add %s]",$word));
+            $output->writeln(sprintf("单词：%s没有查到，请先添加 [lightnd add %s]",$word,$word));
         }else
         {
             $output->writeln(sprintf("单词：%s含义如下:\n",$word));

@@ -92,8 +92,8 @@ class AddCommand extends BaseCommand
 
     protected function execute(InputInterface $input,OutputInterface $output)
     {
-        $word = $input->getArgument('word');
-        $desc = $input->getArgument('desc');
+        $word = trim($input->getArgument('word'));
+        $desc = trim($input->getArgument('desc'));
         $output->writeln(sprintf("你输入的单词:%s,\n 描述为:%s\n",$word,$desc));
         try
         {
