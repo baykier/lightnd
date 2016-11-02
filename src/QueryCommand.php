@@ -49,7 +49,8 @@ class QueryCommand extends BaseCommand
     protected function execute(InputInterface $input,OutputInterface $output)
     {
         $word = $input->getArgument('word');
-        $result = $this->findWord($word);
+        //单词转为小写
+        $result = $this->findWord(mb_strtolower($word));
         if (!$result)
         {
             $output->writeln(sprintf("单词：%s没有查到，请先添加 [lightnd add %s]",$word,$word));

@@ -99,7 +99,8 @@ class AddCommand extends BaseCommand
         {
             if ($this->isNew)
             {
-                $result = $this->addWord($word,$desc);
+                //单词转为小写
+                $result = $this->addWord(mb_strtolower($word),$desc);
             }
             elseif (!$this->isNew && $this->isRewrite)
             {
