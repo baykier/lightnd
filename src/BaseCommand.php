@@ -120,6 +120,5 @@ class BaseCommand extends Command
         {
             throw new \Exception($e->getMessage(),$e->getCode());
         }
-
     }
 }

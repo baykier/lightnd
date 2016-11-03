@@ -14,11 +14,12 @@ define('ROOT_PATH',dirname(__DIR__));
  use Baykier\Lightnd\AddCommand;
  use \Baykier\Lightnd\QueryCommand;
  use Baykier\Lightnd\TestCommand;
- use Symfony\Component\Console\Application;
+ use Baykier\Lightnd\Application;
 
 
 
- $app = new Application('lightnd','1.0');
+
+ $app = new Application();
  $app->add(new AddCommand());
  $app->add(new QueryCommand());
  $app->add(new TestCommand());
