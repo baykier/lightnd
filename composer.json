@@ -12,7 +12,8 @@
         "php": ">=5.5.9",
         "symfony/console": "3.*",
         "monolog/monolog": "^1.21",
-        "slim/pdo":"~1.9"
+        "slim/pdo":"~1.9",
+        "symfony/symfony": "3.*"
     },
 
     "autoload":{
