@@ -71,7 +71,7 @@ class TestCommand extends BaseCommand
                 $output->writeln("\n");
             }
             $processBar->finish();
-            $output->writeln('\n测试完成');
+            $output->writeln("\n测试完成");
             if ($logTime)
             {
                 $output->writeln(sprintf("测试共用时:%s 秒",time() - $testStart));

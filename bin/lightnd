@@ -15,6 +15,7 @@ define('ROOT_PATH',dirname(__DIR__));
  use \Baykier\Lightnd\QueryCommand;
  use Baykier\Lightnd\TestCommand;
  use Baykier\Lightnd\Application;
+ use Baykier\Lightnd\TranslateCommand;
 
 
 
@@ -23,4 +24,6 @@ define('ROOT_PATH',dirname(__DIR__));
  $app->add(new AddCommand());
  $app->add(new QueryCommand());
  $app->add(new TestCommand());
+ $app->add(new TranslateCommand());
+
  $app->run();

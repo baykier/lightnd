@@ -13,12 +13,36 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class BaseCommand extends Command
 {
+    /**
+     * @配置参数
+     * @var array
+     */
+    protected static $config = array();
+
+    public function __construct($name = null,$config = null)
+    {
+        parent::__construct($name);
+
+
+
+        if (null == $config && file_exists(ROOT_PATH . '/config.php'))
+        {
+
+            $configFile = ROOT_PATH . '/config.php';
+            require $configFile;
+            self::$config = isset($config) ? $config : array();
+        }
+
+    }
+
+
+
     /* var $db \Baykier\Lightnd\Db */
     protected $db = null;
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        require_once ROOT_PATH . '/config.php';
+        $config = self::$config;
         if (!isset($config['db']['default'])) {
             throw new \Exception(sprintf("You have not set the db config command:%s", $this->getName()));
         }

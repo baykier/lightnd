@@ -6,15 +6,21 @@
  * Time: 下午8:13
  */
 
-$config = array();
-
-$config['db'] = array(
-    'default' => array(
-        'driver' => 'mysql',
-        'host' => 'your database host',
-        'dbname' => 'your dbname',
-        'user' => 'your name',
-        'password' => 'your password',
-        'charset' => 'UTF-8',
+$config = array(
+    'db' => array(
+        'default' => array(
+            'driver' => 'mysql',
+            'host' => '108.61.247.31',
+            'dbname' => 'lightnd',
+            'user' => 'froyo',
+            'password' => 'froyo',
+            'charset' => 'UTF-8',
+        ),
     ),
+    'youdao' => array(
+        'keyfrom' => 'XXX',
+        'key' => 'xxx',
+    )
 );
+
+return $config;
