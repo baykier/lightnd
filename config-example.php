@@ -10,10 +10,10 @@ $config = array(
     'db' => array(
         'default' => array(
             'driver' => 'mysql',
-            'host' => '108.61.247.31',
-            'dbname' => 'lightnd',
-            'user' => 'froyo',
-            'password' => 'froyo',
+            'host' => '127.0.0.1',
+            'dbname' => 'xxxx',
+            'user' => 'xxxx',
+            'password' => 'xxxxx',
             'charset' => 'UTF-8',
         ),
     ),
