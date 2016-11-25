@@ -31,7 +31,7 @@ class TranslateCommand extends BaseCommand
     protected $isRewrite = false;
 
     protected $word = '';
-    protected $desc = '';
+    protected $desc = array();
 
     protected $source = '';
     protected $target = '';
@@ -43,7 +43,10 @@ class TranslateCommand extends BaseCommand
         $this->setName('translate')
             ->setAliases(array('tla'))
             ->setDescription('翻译单词 !')
-            ->addArgument('word',InputArgument::OPTIONAL,'要翻译的单词');
+            ->addArgument('word',
+                InputArgument::IS_ARRAY | InputArgument::OPTIONAL,
+                '要翻译的单词'
+            );
 
     }
 
@@ -72,17 +75,24 @@ class TranslateCommand extends BaseCommand
         {
             throw new \Exception("翻译配置不存在，请先配置");
         }
+
         $translate = new Translate($config['youdao']['key'],$config['youdao']['keyfrom']);
-
-        $this ->desc = $translate->translate($word);
-
+        $word = (array) $word;
+        foreach ($word as $v)
+        {
+            $this ->desc[] = $translate->translate(trim($v));
+        }
     }
 
     protected function execute(InputInterface $input,OutputInterface $output)
     {
-        $word = trim($input->getArgument('word'));
-        $output->writeln(sprintf("单词:%s的翻译如下:\n",$word));
-        $output->writeln($this->desc);
-
+        $word = (array)$input->getArgument('word');
+        foreach ($word as $k => $v)
+        {
+            $output->writeln(sprintf("单词:<info>%s</info>的翻译如下:\n",$word[$k]));
+            $output->write('<comment>');
+            $output->writeln($this->desc[$k]);
+            $output->write('</comment>');
+        }
     }
 }
