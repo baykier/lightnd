@@ -16,6 +16,11 @@ linghtnd 是一个用php写的CLI小程序，用来帮助你学习英语，同�
 * composer install
 
 ```
+##数据库配置
+
+1 用mysql workbench 将模型('./data/lightnd.mwb')导入数据库中
+
+2 导入sql文件('./data/lightnd.sql')
 
 
 ### usage基本用法
@@ -33,6 +38,11 @@ linghtnd 是一个用php写的CLI小程序，用来帮助你学习英语，同�
 
 bin/lightnd query 
 
+```
+* 翻译
+
+```
+bin/lightnd translate name
 ```
 
 
