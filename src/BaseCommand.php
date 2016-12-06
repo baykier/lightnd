@@ -103,9 +103,10 @@ class BaseCommand extends Command
         if (empty($word) || empty($desc)) {
             throw new \Exception(sprintf("word:%s 或者desc:%s 不能为空", $word, $desc));
         }
-        return $this->db->update(array('desc' => $desc))
+        $updateStm =  $this->db->update(array('`desc`' => $desc))
             ->table('ln_words')
             ->where('word', '=', $word);
+        return $updateStm->execute();
     }
 
     /**
