@@ -19,6 +19,12 @@ class BaseCommand extends Command
      */
     protected static $config = array();
 
+    const DB_REQUIRED = 1;
+
+    const DB_NONE = 0;
+
+    protected static $dbLevel = self::DB_NONE;
+
     public function __construct($name = null,$config = null)
     {
         parent::__construct($name);
@@ -43,8 +49,16 @@ class BaseCommand extends Command
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $config = self::$config;
-        if (!isset($config['db']['default'])) {
+
+        if (!isset($config['db']['default']) && self::$dbLevel == self::DB_REQUIRED) {
             throw new \Exception(sprintf("You have not set the db config command:%s", $this->getName()));
+        }else{
+            $output->writeln('你的程序配置<config.php>不存在');
+            $output->writeln('不能使用下面的命令:');
+            $output->writeln('lightnd query');
+            $output->writeln('lightnd add');
+            $output->writeln('lightnd test');
+            exit(1);
         }
         $db = $config['db']['default'];
 
