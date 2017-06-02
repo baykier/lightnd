@@ -50,25 +50,28 @@ class BaseCommand extends Command
     {
         $config = self::$config;
 
-        if (!isset($config['db']['default']) && self::$dbLevel == self::DB_REQUIRED) {
+        if (!isset($config['db']['default'])) {
+            if (self::$dbLevel == self::DB_NONE)
+            {
+                $output->writeln('你的程序配置<config.php>不存在');
+                $output->writeln('不能使用下面的命令:');
+                $output->writeln('lightnd query');
+                $output->writeln('lightnd add');
+                $output->writeln('lightnd test');
+                return ;
+            }
             throw new \Exception(sprintf("You have not set the db config command:%s", $this->getName()));
-        }else{
-            $output->writeln('你的程序配置<config.php>不存在');
-            $output->writeln('不能使用下面的命令:');
-            $output->writeln('lightnd query');
-            $output->writeln('lightnd add');
-            $output->writeln('lightnd test');
-            exit(1);
-        }
-        $db = $config['db']['default'];
+        }else
+        {
+            $db = $config['db']['default'];
 
-        try {
-            $this->db = new Db(sprintf("%s:host=%s;dbname=%s", $db['driver'], $db['host'], $db['dbname']), $db['user'], $db['password'],
-                array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''));
-        } catch (\PDOException $e) {
-            throw new \Exception($e->getMessage(), $e->getCode());
+            try {
+                $this->db = new Db(sprintf("%s:host=%s;dbname=%s", $db['driver'], $db['host'], $db['dbname']), $db['user'], $db['password'],
+                    array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''));
+            } catch (\PDOException $e) {
+                throw new \Exception($e->getMessage(), $e->getCode());
+            }
         }
-
     }
 
     /**
