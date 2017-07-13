@@ -18,8 +18,8 @@ $config = array(
         ),
     ),
     'youdao' => array(
-        'keyfrom' => 'XXX',
-        'key' => 'xxx',
+        'keyfrom' => 'lightnd',
+        'key' => '170546508',
     )
 );
 
