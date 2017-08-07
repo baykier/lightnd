@@ -1,0 +1,19 @@
+{
+  "alias": "lightnd.phar",
+  "chmod": "0755",
+  "directories": ["src","bin"],
+  "files":[
+    "./config.php"
+  ],
+  "finder": [
+    {
+      "name": "*.php",
+      "exclude": ["Tests"],
+      "in": "vendor"
+    }
+  ],
+  "git-version": "package_version",
+  "main": "bin/lightnd",
+  "output": "lightnd.phar",
+  "stub": true
+}
